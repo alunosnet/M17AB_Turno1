@@ -40,7 +40,7 @@
             <asp:FileUpload runat="server" ID="fileCapa" CssClass="form-control" />
         </div>
         <asp:Label runat="server" ID="lbErroLivro"></asp:Label>
-        <asp:Button runat="server" ID="btAdicionarLivro" CssClass="btn btn-danger" OnClick="btAdicionarLivro_Click" />
+        <asp:Button Text="Adicionar" runat="server" ID="btAdicionarLivro" CssClass="btn btn-danger" OnClick="btAdicionarLivro_Click" />
     </div>
     <div id="divUtilizadores" runat="server"></div>
     <div id="divEmprestimos" runat="server"></div>

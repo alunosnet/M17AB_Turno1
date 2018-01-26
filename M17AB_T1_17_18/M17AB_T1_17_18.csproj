@@ -71,7 +71,9 @@
     <Content Include="css\bootstrap.css.map" />
     <Content Include="css\bootstrap.min.css.map" />
     <None Include="packages.config" />
+    <Content Include="editarlivro.aspx" />
     <Content Include="logout.aspx" />
+    <Content Include="removerlivro.aspx" />
     <Content Include="Site1.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -113,6 +115,13 @@
       <DependentUpon>areacliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="BaseDados.cs" />
+    <Compile Include="editarlivro.aspx.cs">
+      <DependentUpon>editarlivro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editarlivro.aspx.designer.cs">
+      <DependentUpon>editarlivro.aspx</DependentUpon>
+    </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -136,6 +145,13 @@
     <Compile Include="registo.aspx.designer.cs">
       <DependentUpon>registo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="removerlivro.aspx.cs">
+      <DependentUpon>removerlivro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="removerlivro.aspx.designer.cs">
+      <DependentUpon>removerlivro.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -146,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Imagens\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
