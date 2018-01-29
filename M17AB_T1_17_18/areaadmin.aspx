@@ -42,7 +42,64 @@
         <asp:Label runat="server" ID="lbErroLivro"></asp:Label>
         <asp:Button Text="Adicionar" runat="server" ID="btAdicionarLivro" CssClass="btn btn-danger" OnClick="btAdicionarLivro_Click" />
     </div>
-    <div id="divUtilizadores" runat="server"></div>
-    <div id="divEmprestimos" runat="server"></div>
+    <div id="divUtilizadores" runat="server">
+        <h2>Utilizadores</h2>
+        <asp:GridView runat="server" ID="gvUtilizadores" CssClass="table table-responsive" />
+        <h3>Adicionar</h3>
+        <!--Email-->
+        <div class="form-group">
+            <label for="tbEmailUtil">Email:</label>
+            <asp:TextBox CssClass="form-control" runat="server" ID="tbEmailUtil"></asp:TextBox>
+        </div>
+        <!--Nome-->
+        <div class="form-group">
+            <label for="tbNomeUtil">Nome:</label>
+            <asp:TextBox CssClass="form-control" runat="server" ID="tbNomeUtil"></asp:TextBox>
+        </div>
+        <!--Morada-->
+        <div class="form-group">
+            <label for="tbMoradaUtil">Morada:</label>
+            <asp:TextBox CssClass="form-control" runat="server" ID="tbMoradaUtil"></asp:TextBox>
+        </div>
+        <!--nif-->
+        <div class="form-group">
+            <label for="tbNifUtil">NIF:</label>
+            <asp:TextBox CssClass="form-control" runat="server" ID="tbNifUtil"></asp:TextBox>
+        </div>
+        <!--password-->
+        <div class="form-group">
+            <label for="tbPasswordUtil">Password:</label>
+            <asp:TextBox TextMode="Password" CssClass="form-control" runat="server" ID="tbPasswordUtil"></asp:TextBox>
+        </div>
+        <!--perfil-->
+        <div class="form-group">
+            <label for="ddPerfil">Perfil</label>
+            <asp:DropDownList runat="server" ID="ddPerfil" CssClass="form-control">
+                <asp:ListItem Value="0">Administrador</asp:ListItem>
+                <asp:ListItem Value="1" Selected="True" >Leitor</asp:ListItem>
+            </asp:DropDownList>
+        </div>
+        <asp:Label runat="server" ID="lbErroUtil"></asp:Label>
+        <asp:Button Text="Adicionar" runat="server" ID="btAdicionarUtilizador" CssClass="btn btn-danger" OnClick="btAdicionarUtilizador_Click" />
+     </div>
+    <div id="divEmprestimos" runat="server">
+        <h2>Empréstimos</h2>
+        <asp:GridView runat="server" CssClass="table table-responsive" ID="gvEmprestimos" />
+        <h3>Adicionar</h3>
+        <div class="form-group">
+            <label for="ddLivro">Livro:</label>
+            <asp:DropDownList ID="ddLivro" runat="server" CssClass="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="ddLeitor">Leitor:</label>
+            <asp:DropDownList ID="ddLeitor" runat="server" CssClass="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="cData">Data de Devolução</label>
+            <asp:Calendar runat="server" ID="cData"></asp:Calendar>
+        </div>
+        <asp:Label runat="server" ID="lbErroEmprestimo"></asp:Label>
+        <asp:Button runat="server" ID="btAdicionarEmprestimos" Text="Adicionar" CssClass="btn btn-danger" OnClick="btAdicionarEmprestimos_Click" />
+    </div>
     <div id="divConsultas" runat="server"></div>
 </asp:Content>
