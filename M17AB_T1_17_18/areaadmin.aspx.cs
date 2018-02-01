@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Configuration;
 
 namespace M17AB_T1_17_18 {
     public partial class areaadmin : System.Web.UI.Page {
@@ -24,7 +25,10 @@ namespace M17AB_T1_17_18 {
             gvLivros.AllowPaging = true;
             gvLivros.PageIndexChanging += GvLivros_PageIndexChanging;
 
+            gvEmprestimos.RowCommand += GvEmprestimos_RowCommand;
         }
+
+
 
         #region Livros
         private void GvLivros_PageIndexChanging(object sender, GridViewPageEventArgs e) {
@@ -377,10 +381,76 @@ namespace M17AB_T1_17_18 {
                     ));
         }
         protected void btAdicionarEmprestimos_Click(object sender, EventArgs e) {
-
+            try {
+                int idLeitor = int.Parse(ddLeitor.SelectedValue);
+                int idLivro = int.Parse(ddLivro.SelectedValue);
+                DateTime data = cData.SelectedDate;
+                BaseDados.Instance.adicionarEmprestimo(idLivro, idLeitor, data);
+                //atualizar a grelha e dd livros
+                atualizaGrelhaEmprestimos();
+                atualizaDDLivros();
+            }catch(Exception erro) {
+                lbErroEmprestimo.Text = "Ocorreu o seguinte erro: " + erro.Message;
+                lbErroEmprestimo.CssClass = "alert alert-danger";
+            }
         }
         private void atualizaGrelhaEmprestimos() {
+            gvEmprestimos.Columns.Clear();
+            gvEmprestimos.DataSource = null;
+            gvEmprestimos.DataBind();
 
+            DataTable dados;
+            if (cbEmprestimos.Checked)
+                dados = BaseDados.Instance.listaTodosEmprestimosPorConcluirComNomes();
+            else
+                dados= BaseDados.Instance.listaTodosEmprestimosComNomes();
+
+            if (dados == null || dados.Rows.Count == 0) return;
+
+            //coluna para terminar um empréstimo
+            ButtonField bfReceberLivro = new ButtonField();
+            bfReceberLivro.HeaderText = "Receber livro";
+            bfReceberLivro.Text = "Receber";
+            bfReceberLivro.ButtonType = ButtonType.Button;
+            bfReceberLivro.ControlStyle.CssClass = "btn btn-default";
+            bfReceberLivro.CommandName = "receber";
+            gvEmprestimos.Columns.Add(bfReceberLivro);
+            //coluna para enviar um email ao leitor
+            ButtonField bfEmail = new ButtonField();
+            bfEmail.HeaderText = "Enviar email";
+            bfEmail.Text = "Email";
+            bfEmail.ButtonType = ButtonType.Button;
+            bfEmail.CommandName = "email";
+            gvEmprestimos.Columns.Add(bfEmail);
+
+            gvEmprestimos.DataSource = dados;
+            gvEmprestimos.AutoGenerateColumns = true;
+            gvEmprestimos.DataBind();
+        }
+        private void GvEmprestimos_RowCommand(object sender, GridViewCommandEventArgs e) {
+            //linha em que o utilizador clicou
+            int linha = int.Parse(e.CommandArgument as string);
+            //id do empréstimo
+            int id = int.Parse(gvEmprestimos.Rows[linha].Cells[2].Text);
+            if (e.CommandName == "receber") {
+                BaseDados.Instance.concluirEmprestimo(id);
+                atualizaDDLivros();
+                atualizaGrelhaEmprestimos();
+            }
+            if (e.CommandName == "email") {
+                DataTable dadosEmprestimo = BaseDados.Instance.devolveDadosEmprestimo(id);
+                int idUtilizador=int.Parse(dadosEmprestimo.Rows[0]["idutilizador"].ToString());
+                DataTable dadosUtilizador = BaseDados.Instance.devolveDadosUtilizador(idUtilizador);
+                string email = dadosUtilizador.Rows[0]["email"].ToString();
+                string password = ConfigurationManager.AppSettings["senha"].ToString();
+                BaseDados.enviarMail("alunosnet@gmail.com", password, email,
+                    "Empréstimo fora de prazo", "Caro leitor deve devolver o livro que tem emprestado");
+                lbErroEmprestimo.Text = "Email enviado com sucesso";
+            }
+        }
+        //checkbox foi selecionada
+        protected void cbEmprestimos_CheckedChanged(object sender, EventArgs e) {
+            atualizaGrelhaEmprestimos();
         }
         #endregion
         #region Consultas
@@ -388,8 +458,7 @@ namespace M17AB_T1_17_18 {
 
         }
 
+
         #endregion
-
-
     }
 }

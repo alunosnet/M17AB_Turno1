@@ -84,6 +84,7 @@
      </div>
     <div id="divEmprestimos" runat="server">
         <h2>Empréstimos</h2>
+        Listar só empréstimos por concluir:<asp:CheckBox OnCheckedChanged="cbEmprestimos_CheckedChanged" runat="server" ID="cbEmprestimos" AutoPostBack="true" />
         <asp:GridView runat="server" CssClass="table table-responsive" ID="gvEmprestimos" />
         <h3>Adicionar</h3>
         <div class="form-group">
