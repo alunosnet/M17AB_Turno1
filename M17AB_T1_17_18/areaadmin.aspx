@@ -102,5 +102,12 @@
         <asp:Label runat="server" ID="lbErroEmprestimo"></asp:Label>
         <asp:Button runat="server" ID="btAdicionarEmprestimos" Text="Adicionar" CssClass="btn btn-danger" OnClick="btAdicionarEmprestimos_Click" />
     </div>
-    <div id="divConsultas" runat="server"></div>
+    <div id="divConsultas" runat="server">
+        <asp:DropDownList runat="server" ID="ddConsulta" AutoPostBack="true"
+            OnSelectedIndexChanged="ddConsulta_SelectedIndexChanged">
+            <asp:ListItem Value="1">Top de Leitores</asp:ListItem>
+            <asp:ListItem Value="2">Top de Livros</asp:ListItem>
+        </asp:DropDownList>
+        <asp:GridView ID="gvConsultas" runat="server" CssClass="table table-responsive"></asp:GridView>
+    </div>
 </asp:Content>

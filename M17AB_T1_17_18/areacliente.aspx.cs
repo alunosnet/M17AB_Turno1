@@ -26,7 +26,6 @@ namespace M17AB_T1_17_18 {
                 int linha = int.Parse(e.CommandArgument as string);
                 int idlivro = int.Parse(gvDados.Rows[linha].Cells[1].Text);
                 int idleitor = int.Parse(Session["id"].ToString());
-                //todo função para registar empréstimo em nome do leitor com login
                 BaseDados.Instance.adicionarEmprestimo(idlivro, idleitor, DateTime.Now.AddDays(7));
 
                 atualizaGrelhaEmprestimo();

@@ -455,10 +455,48 @@ namespace M17AB_T1_17_18 {
         #endregion
         #region Consultas
         protected void btConsultas_Click(object sender, EventArgs e) {
-
+            //mostrar div consultar
+            divConsultas.Visible = true;
+            //esconder as restantes
+            divUtilizadores.Visible = false;
+            divEmprestimos.Visible = false;
+            divLivros.Visible = false;
+            btLivros.CssClass = "btn btn-info";
+            btUtilizadores.CssClass = "btn btn-info";
+            btEmprestismos.CssClass = "btn btn-info";
+            btConsultas.CssClass = "btn btn-info active";
+            //desativar cache
+            Response.CacheControl = "no-cache";
         }
 
+        protected void ddConsulta_SelectedIndexChanged(object sender, EventArgs e) {
+            //limpar grid
+            gvConsultas.Columns.Clear();
 
+            //verificar id consulta
+            int iconsulta = int.Parse(ddConsulta.SelectedValue);
+            //datatable
+            DataTable dados;
+            //switch sql
+            string sql = "";
+            switch (iconsulta) {
+                case 1: sql = @"SELECT TOP 5 nome,count(*)
+                                FROM emprestimos
+                                INNER JOIN utilizadores ON idutilizador=id
+                                group by idutilizador,nome
+                                order by count(*) DESC";
+                    break;
+                case 2: sql = "";
+                    break;
+            }
+            //associar o datatable consulta
+            dados = BaseDados.Instance.devolveConsulta(sql);
+            //associar a grid ao datatable
+            gvConsultas.DataSource = dados;
+            gvConsultas.DataBind();
+        }
         #endregion
+
+
     }
 }
